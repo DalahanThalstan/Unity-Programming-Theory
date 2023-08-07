@@ -7,16 +7,10 @@ public class Herbivore : Animal
 
     public override void EatPlant()
     {
-        Hunger+=50;
-        if(Hunger > 100){
-            Hunger = 100;
-        }
+        Eat(50);
     }
 
     public override void EatMeat() {
-        Hunger+=10;
-        if(Hunger > 100){
-            Hunger = 100;
-        }
+        Eat(10);
     }
 }

@@ -7,16 +7,11 @@ public class Carnivore : Animal
 
     public override void EatPlant()
     {
-        Hunger+=10;
-        if(Hunger > 100){
-            Hunger = 100;
-        }
+        Eat(10);
+        
     }
 
     public override void EatMeat() {
-        Hunger+=50;
-        if(Hunger > 100){
-            Hunger = 100;
-        }
+        Eat(50);
     }
 }

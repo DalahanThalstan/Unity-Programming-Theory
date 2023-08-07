@@ -6,9 +6,9 @@ using UnityEngine;
 public class Animal : MonoBehaviour
 {
     public int Hunger { get; protected set; }
-    private int HungerTickRate { get;  set; }
+    private int HungerTickRate { get; set; }
 
-    public TextMeshProUGUI HungerText;
+    [SerializeField] private TextMeshProUGUI HungerText;
 
     // Start is called before the first frame update
     void Start()
@@ -18,23 +18,14 @@ public class Animal : MonoBehaviour
         StartCoroutine(HungerTick());
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void EatPlant()
     {
-        HungerText.text = "Hunger: " + Hunger;
+        Eat(25);
     }
 
-    IEnumerator HungerTick()
+    public virtual void EatMeat()
     {
-        while (IsAlive())
-        {
-            yield return new WaitForSeconds(HungerTickRate);
-            Hunger--;
-
-            if(!IsAlive()){
-                Destroy(gameObject);
-            }
-        }
+        Eat(25);
     }
 
     public bool IsAlive()
@@ -42,18 +33,37 @@ public class Animal : MonoBehaviour
         return Hunger > 0;
     }
 
-    public virtual void EatPlant()
+    protected void UpdateHungerText()
     {
-        Hunger+=25;
-        if(Hunger > 100){
-            Hunger = 100;
+        HungerText.text = "Hunger: " + Hunger;
+    }
+
+    protected void Eat(int value)
+    {
+        if (IsAlive())
+        {
+            Hunger += value;
+            if (Hunger > 100)
+            {
+                Hunger = 100;
+            }
+            UpdateHungerText();
         }
     }
 
-    public virtual void EatMeat() {
-        Hunger+=25;
-        if(Hunger > 100){
-            Hunger = 100;
+
+    private IEnumerator HungerTick()
+    {
+        while (IsAlive())
+        {
+            yield return new WaitForSeconds(HungerTickRate);
+            Hunger--;
+
+            if (!IsAlive())
+            {
+                Destroy(gameObject);
+            }
+            UpdateHungerText();
         }
     }
 }
