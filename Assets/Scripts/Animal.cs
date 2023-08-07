@@ -1,26 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Animal : MonoBehaviour
 {
-
-    public string Name { get; protected set; }
     public int Hunger { get; protected set; }
     private int HungerTickRate { get;  set; }
+
+    public TextMeshProUGUI HungerText;
 
     // Start is called before the first frame update
     void Start()
     {
         Hunger = 100;
-        HungerTickRate = 10;
+        HungerTickRate = 1;
         StartCoroutine(HungerTick());
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        HungerText.text = "Hunger: " + Hunger;
     }
 
     IEnumerator HungerTick()
